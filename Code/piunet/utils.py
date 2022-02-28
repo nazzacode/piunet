@@ -1,10 +1,10 @@
 import cv2
+from tqdm import tqdm
 import numpy as np
 from glob import glob
 from scipy.ndimage import shift
 from skimage.transform import rescale
 from skimage.feature import masked_register_translation
-from tqdm import tqdm
 
 
 def load_dataset(base_dir, part, band):
