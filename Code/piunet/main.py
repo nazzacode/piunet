@@ -11,7 +11,7 @@ import torch.nn as nn
 from torch.utils.tensorboard import SummaryWriter
 
 from config import Config
-from losses import l1_registered_uncertainty_loss, l1_registered_loss, cpsnr
+from losses import l1_registered_uncertainty_loss, l1_registered_loss, cpsnr, cssim
 from model import PIUNET
 from dataset import ProbaVDatasetTrain, ProbaVDatasetVal
 
@@ -51,6 +51,7 @@ scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, [150000], gamma=0.2,
 
 tot_steps=0
 max_psnr=0.0
+max_ssim = 0.0
 for epoch in range(config.N_epoch):	
 	for step, (x_lr, x_hr, mask) in enumerate(train_loader):
 		
@@ -79,8 +80,9 @@ for epoch in range(config.N_epoch):
 		if step%config.log_every_iter ==0:
 			log_writer.add_scalar('train/loss', loss.cpu().detach().numpy(), tot_steps+step)
 			psnr_train = cpsnr(x_hr, mu_sr, mask, config.patch_size*3)
+			ssim_train = cssim(x_hr, mu_sr, mask, config.patch_size*3)
 			log_writer.add_scalar('train/cPSNR', psnr_train.cpu().detach().numpy(), tot_steps+step)
-
+			log_writer.add_scalar('train/cSSIM', ssim_train.cpu().detach().numpy(), tot_steps+step)
 
 	tot_steps = tot_steps+step
 
@@ -88,6 +90,7 @@ for epoch in range(config.N_epoch):
 		model.eval()
 		with torch.no_grad():
 			psnr_val=[]
+			ssim_val=[]
 			x_sr_all=[]
 			x_hr_all=[]
 			s_sr_all=[]
@@ -104,7 +107,9 @@ for epoch in range(config.N_epoch):
 				x_hr_all.append(x_hr)
 				s_sr_all.append(sigma_sr)
 				psnr_val.append(cpsnr(x_hr, mu_sr, mask, 128*3).cpu().detach().numpy())
+				ssim_val.append(cssim(x_hr, mu_sr, mask, 128*3).cpu().detach().numpy())
 			log_writer.add_scalar('val/cPSNR', np.mean(psnr_val), tot_steps)
+			log_writer.add_scalar('val/cSSIM', np.mean(ssim_val), tot_steps)
 
 			x_sr = torch.cat(x_sr_all)
 			x_hr = torch.cat(x_hr_all)
