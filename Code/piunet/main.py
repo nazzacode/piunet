@@ -27,7 +27,9 @@ config = Config()
 
 # Import datasets
 train_dataset = ProbaVDatasetTrain(config)
-train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=config.batch_size, shuffle=True, drop_last=False, num_workers=config.workers)
+train_loader = torch.utils.data.DataLoader(train_dataset, 
+ batch_size=config.batch_size, shuffle=True, drop_last=False, 
+ num_workers=config.workers)
 
 if config.validate:
 	val_dataset = ProbaVDatasetVal(config)
@@ -51,7 +53,8 @@ scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, [150000], gamma=0.2,
 
 tot_steps=0
 max_psnr=0.0
-for epoch in range(config.N_epoch):	
+
+for epoch in tqdm(range(config.N_epoch)):  # ? how to name pogress-bar "Epoc"	
 	for step, (x_lr, x_hr, mask) in enumerate(train_loader):
 		
 		model.train()
