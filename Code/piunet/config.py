@@ -1,15 +1,11 @@
 from enum import Enum
 
-class Band(Enum):
-    NIR = "NIR"
-    RED = "RED"
-
 class Config(object):
 
     def __init__(self):
-        datadir = "Dataset/probav_data_synthetic1/"
-        band =  Band.RED                             # Band.NIR | Band.RED
 
+        datadir = "Dataset/probav_data/"  # raw data
+        band = 'RED'                      # 'NIR' | 'RED'
 
         self.model_name = datadir.split('/')[1] + '_' + band 
 
@@ -33,7 +29,7 @@ class Config(object):
 
         # learning
         self.batch_size = 18
-        self.N_epoch = 150 # ? maybe reduce?
+        self.N_epoch = 150
         self.learning_rate = 1e-4
         self.workers = 5
 
