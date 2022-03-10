@@ -45,7 +45,8 @@ model.cuda()
 print('No. params: %d' % (sum(p.numel() for p in model.parameters() if p.requires_grad),) )
 
 # Prepare logging
-log_writer = SummaryWriter(log_dir=os.path.join(param.log_dir,'model_'+model_time))
+log_writer = SummaryWriter(log_dir=os.path.join(param.log_dir,'model_' + model_time + '_' 
+ 																		+ config.model_name))
 
 # Train
 optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate, weight_decay=0.0)
@@ -53,9 +54,9 @@ scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, [150000], gamma=0.2,
 
 tot_steps=0
 max_psnr=0.0
-max_ssim = 0.0 #! DELETED IN PREVIOUS EXPERIMENT
+max_ssim = 0.0  #! DELETED IN PREVIOUS EXPERIMENT
 
-for epoch in tqdm(range(config.N_epoch)):  # ? how to name pogress-bar "Epoc"	
+for epoch in tqdm(range(config.N_epoch)):	
 	for step, (x_lr, x_hr, mask) in enumerate(train_loader):
 		
 		model.train()
@@ -119,10 +120,10 @@ for epoch in tqdm(range(config.N_epoch)):  # ? how to name pogress-bar "Epoc"
 			s_sr = torch.cat(s_sr_all)
 
 		if np.mean(psnr_val)>max_psnr:
-			torch.save(model.state_dict(), os.path.join(param.save_dir,'model_weights_best_'+model_time+'.pt'))
+			torch.save(model.state_dict(), os.path.join(param.save_dir,'model_weights_best_'+model_time+'_'+config.model_name+'.pt'))
 			max_psnr = np.mean(psnr_val)
 
 	if epoch%50==0:
-		torch.save(model.state_dict(), os.path.join(param.save_dir,'model_weights_'+model_time+'_epoch_'+str(epoch)+'.pt'))
+		torch.save(model.state_dict(), os.path.join(param.save_dir,'model_weights_'+model_time+'_'+config.model_name+'_epoch_'+str(epoch)+'.pt'))
 
-	torch.save(model.state_dict(), os.path.join(param.save_dir,'model_weights_'+model_time+'.pt'))
+	torch.save(model.state_dict(), os.path.join(param.save_dir,'model_weights_'+model_time+'_'+config.model_name+'.pt'))
