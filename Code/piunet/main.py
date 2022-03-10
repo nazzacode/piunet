@@ -54,7 +54,6 @@ scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, [150000], gamma=0.2,
 
 tot_steps=0
 max_psnr=0.0
-max_ssim = 0.0  #! DELETED IN PREVIOUS EXPERIMENT
 
 for epoch in tqdm(range(config.N_epoch)):	
 	for step, (x_lr, x_hr, mask) in enumerate(train_loader):
