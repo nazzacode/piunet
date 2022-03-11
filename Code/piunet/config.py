@@ -4,8 +4,11 @@ class Config(object):
 
     def __init__(self):
 
-        datadir = "Dataset/probav_data/"  # raw data
-        band = 'RED'                      # 'NIR' | 'RED'
+        # raw data folder
+        datadir = "Dataset/probav_data_synthetic_A/"  
+        # band = 'NIR' | 'RED'
+        band = 'NIR'                      
+        
 
         self.model_name = datadir.split('/')[1] + '_' + band 
 
@@ -28,7 +31,7 @@ class Config(object):
         self.patch_size = 32
 
         # learning
-        self.batch_size = 18
+        self.batch_size = 16
         self.N_epoch = 150
         self.learning_rate = 1e-4
         self.workers = 5
