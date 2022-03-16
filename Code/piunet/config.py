@@ -5,7 +5,7 @@ class Config(object):
     def __init__(self):
 
         # raw data folder
-        datadir = "Dataset/probav_data_synthetic_C/"  
+        datadir = "Dataset/probav_data_synthetic_B/"  
         # band = 'NIR' | 'RED'
         band = 'NIR'                      
         
