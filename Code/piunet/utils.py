@@ -40,13 +40,13 @@ def load_dataset(base_dir, part, band):
         X_masks.append(QM)
         
         if part != "test":
-            y.append(cv2.imread(imgset+"/HR.png",cv2.IMREAD_UNCHANGED)[...,None])
+            y.append(cv2.imread(imgset+"/HR.png",cv2.IMREAD_UNCHANGED)[...,None]) 
             y_masks.append(cv2.imread(imgset+"/SM.png",cv2.IMREAD_UNCHANGED).astype("bool")[...,None])
     
     if part != "test":
         return X,X_masks,np.array(y),np.array(y_masks)
     else:
-         return X,X_masks
+        return X,X_masks
 
 
 
