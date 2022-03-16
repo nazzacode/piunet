@@ -5,11 +5,10 @@ class Config(object):
     def __init__(self):
 
         # raw data folder
-        datadir = "Dataset/probav_data_synthetic_B/"  
+        datadir = "Dataset/probav_data_synthetic_X_100_100/"  
         # band = 'NIR' | 'RED'
         band = 'NIR'                      
         
-
         self.model_name = datadir.split('/')[1] + '_' + band 
 
         self.train_lr_file    = datadir + "X_" + band + "_train.npy"
