@@ -5,7 +5,7 @@ class Config(object):
     def __init__(self):
 
         # raw data folder
-        datadir = "Dataset/probav_data_synthetic_X_50_50/"  
+        datadir = "Dataset/probav_data_synthetic_X_100_100/"  
         # band = 'NIR' | 'RED'
         band = 'NIR'                      
         
@@ -17,7 +17,7 @@ class Config(object):
         self.val_lr_file      = datadir + "X_" + band + "_val.npy"
         self.val_hr_file      = datadir + "y_" + band + "_val.npy"
         self.val_masks_file   = datadir + "y_" + band + "_val_masks.npy"
-        self.max_train_scenes = 393 if band == "NIR" else 415
+        self.max_train_scenes = 792 if band == "NIR" else 830
         
         self.device = "cuda"
         self.validate = True

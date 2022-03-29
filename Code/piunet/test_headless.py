@@ -10,7 +10,7 @@ from skimage import io
 from zipfile import ZipFile
 import torch
 
-PATH_DATASET = '../../Dataset/probav_data/'
+PATH_DATASET = '../../Dataset/probav_data_synthetic_X_50_50/'
 
 band = 'NIR' 
 # band = 'RED'
@@ -27,7 +27,7 @@ print('X_test: ', X_test.shape)
 from config import Config
 from model import PIUNET
 
-MODEL_FILE = '../../Results/piunet/model_weights_20220304_0144.pt'
+MODEL_FILE = '../../Results/piunet/model_weights_best_20220316_2121_probav_data_synthetic_X_50_50_NIR.pt'
 
 config = Config()
 
